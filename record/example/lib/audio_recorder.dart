@@ -44,7 +44,7 @@ class _RecorderState extends State<Recorder> with AudioRecorderMixin {
   Future<void> _start() async {
     try {
       if (await _audioRecorder.hasPermission()) {
-        const encoder = AudioEncoder.aacLc;
+        const encoder = AudioEncoder.pcm16bits; // .aacLc;
 
         if (!await _isEncoderSupported(encoder)) {
           return;
@@ -53,13 +53,20 @@ class _RecorderState extends State<Recorder> with AudioRecorderMixin {
         final devs = await _audioRecorder.listInputDevices();
         debugPrint(devs.toString());
 
-        const config = RecordConfig(encoder: encoder, numChannels: 1);
+        const config = RecordConfig(
+            encoder: encoder,
+            numChannels: 1,
+            autoGain: true,
+            noiseSuppress: true,
+            echoCancel: true);
 
         // Record to file
-        await recordFile(_audioRecorder, config);
+        // await recordFile(_audioRecorder, config);
+
 
         // Record to stream
-        // await recordStream(_audioRecorder, config);
+        await recordStream(_audioRecorder, config);
+
 
         _recordDuration = 0;
 

@@ -180,6 +180,16 @@ class AudioRecorder {
     });
   }
 
+  ///
+  ///
+  ///
+  Future<double> getSampleRate() async {
+    return _safeCall(() async {
+      _created ??= await _create();
+      return RecordPlatform.instance.getSampleRate(_recorderId);
+    });
+  }
+
   /// Gets current average & max amplitudes (dBFS)
   /// Always returns zeros on unsupported platforms
   Future<Amplitude> getAmplitude() async {

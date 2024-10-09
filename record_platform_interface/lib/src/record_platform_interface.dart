@@ -89,6 +89,9 @@ abstract class RecordPlatform extends PlatformInterface {
   /// Always returns zeros on unsupported platforms
   Future<Amplitude> getAmplitude(String recorderId);
 
+  /// Gets the actual input format sampling rate
+  Future<double> getSampleRate(String recorderId);
+
   /// Checks if the given encoder is supported on the current platform.
   Future<bool> isEncoderSupported(String recorderId, AudioEncoder encoder);
 

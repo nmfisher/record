@@ -85,6 +85,10 @@ class RecorderFileDelegate: NSObject, AudioRecordingFileDelegate, AVCaptureFileO
       }
     }
   }
+
+  func getSampleRate() -> Float {
+    return 0
+  }
   
   func getAmplitude() -> Float {
     var current: Float?

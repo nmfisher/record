@@ -91,6 +91,10 @@ class Recorder {
   func listInputDevices() throws -> [Device] {
     return try listInputs()
   }
+
+  func getSampleRate() -> Float {
+    return delegate!.getSampleRate()
+  }
   
   func getAmplitude() -> [String : Float] {
     var amp = ["current" : -160.0, "max" : -160.0] as [String : Float]

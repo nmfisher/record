@@ -37,6 +37,11 @@ class RecordLinux extends RecordPlatform {
     return Future.value(true);
   }
 
+  /// Gets the actual input format sampling rate
+  Future<double> getSampleRate(String recorderId) async {
+    return 0;
+  }
+
   @override
   Future<bool> isEncoderSupported(
       String recorderId, AudioEncoder encoder) async {

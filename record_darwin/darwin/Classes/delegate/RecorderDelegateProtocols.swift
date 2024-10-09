@@ -15,6 +15,7 @@ public protocol AudioRecordingDelegate {
   func stop(completionHandler: @escaping (String?) -> ())
   func cancel() throws
   func getAmplitude() -> Float
+  func getSampleRate() -> Float
   func pause()
   func resume() throws
   func dispose()

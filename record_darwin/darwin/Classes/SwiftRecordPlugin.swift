@@ -132,6 +132,8 @@ public class SwiftRecordPlugin: NSObject, FlutterPlugin {
     case "getAmplitude":
       let amp = recorder.getAmplitude()
       result(amp)
+    case "getSampleRate":
+      result(recorder.getSampleRate())
     case "isEncoderSupported":
       let args = call.arguments as! [String : Any]
       guard let encoder = args["encoder"] as? String else  {

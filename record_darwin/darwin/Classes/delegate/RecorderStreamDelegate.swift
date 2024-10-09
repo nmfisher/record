@@ -4,6 +4,7 @@ import Foundation
 class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
   private var audioEngine: AVAudioEngine?
   private var amplitude: Float = -160.0
+  private var sampleRate: Float = 0.0
   private let bus = 0
 
   func start(config: RecordConfig, recordEventHandler: RecordStreamHandler) throws {
@@ -28,6 +29,7 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
 #endif
     
     let srcFormat = audioEngine.inputNode.inputFormat(forBus: 0)
+    sampleRate = Float(srcFormat.sampleRate)
     
     let dstFormat = AVAudioFormat(
       commonFormat: .pcmFormatInt16,
@@ -88,6 +90,10 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
   
   func getAmplitude() -> Float {
     return amplitude
+  }
+
+  func getSampleRate() -> Float {
+    return sampleRate
   }
   
   private func updateAmplitude(_ samples: [Int16]) {
