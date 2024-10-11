@@ -32,6 +32,9 @@ class MediaRecorder(
     // Amplitude
     private var mMaxAmplitude = -160.0
 
+    // Sample rate
+    private var mSampleRate = 0
+
     // Recording config
     private var mConfig: RecordConfig? = null
 
@@ -116,6 +119,10 @@ class MediaRecorder(
         amps.add(current)
         amps.add(mMaxAmplitude)
         return amps
+    }
+
+    override fun getSampleRate(): Double { 
+        return mSampleRate.toDouble()
     }
 
     override fun dispose() {

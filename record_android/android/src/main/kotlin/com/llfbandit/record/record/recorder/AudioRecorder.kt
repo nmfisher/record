@@ -100,6 +100,10 @@ class AudioRecorder(
         return amps
     }
 
+    override fun getSampleRate(): Double {
+        return recorderThread!!.getSampleRate()
+    }
+
     override fun dispose() {
         stop(null)
     }

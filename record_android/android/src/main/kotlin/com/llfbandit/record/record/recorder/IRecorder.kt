@@ -47,5 +47,12 @@ interface IRecorder {
      */
     fun getAmplitude(): List<Double>
 
+     /**
+     * Gets the sample rate
+     *
+     * @return sample rate
+     */
+    fun getSampleRate(): Double
+
     fun dispose()
 }

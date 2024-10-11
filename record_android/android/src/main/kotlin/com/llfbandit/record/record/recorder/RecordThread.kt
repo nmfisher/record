@@ -82,6 +82,7 @@ class RecordThread(
     }
 
     fun getAmplitude(): Double = mPcmReader?.getAmplitude() ?: -160.0
+    fun getSampleRate(): Double = mPcmReader!!.getSampleRate()
 
     fun startRecording() {
         mExecutorService.execute {

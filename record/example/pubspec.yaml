@@ -25,6 +25,18 @@ dependencies:
 dev_dependencies:
   flutter_lints: ^4.0.0
 
+dependency_overrides:
+  record_darwin:
+    path: ../../record_darwin
+  record_android:
+    path: ../../record_android
+  record_web:
+    path: ../../record_web
+  record_linux:
+    path: ../../record_linux
+  record_platform_interface:
+    path: ../../record_platform_interface
+
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
