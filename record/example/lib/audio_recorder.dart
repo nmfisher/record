@@ -54,7 +54,7 @@ class _RecorderState extends State<Recorder> with AudioRecorderMixin {
         debugPrint(devs.toString());
 
         const config = RecordConfig(
-          sampleRate: 16000,
+            sampleRate: 16000,
             encoder: encoder,
             numChannels: 1,
             autoGain: true,
@@ -67,7 +67,11 @@ class _RecorderState extends State<Recorder> with AudioRecorderMixin {
         // Record to stream
         await recordStream(_audioRecorder, config);
 
-        var foo = await _audioRecorder.getSampleRate();
+        var sampleRate = await _audioRecorder.getSampleRate();
+        while (sampleRate == null) {
+          await Future.delayed(const Duration(milliseconds: 1));
+          sampleRate = await _audioRecorder.getSampleRate();
+        }
 
         _recordDuration = 0;
 
@@ -77,6 +81,7 @@ class _RecorderState extends State<Recorder> with AudioRecorderMixin {
       if (kDebugMode) {
         print(e);
       }
+      rethrow;
     }
   }
 
