@@ -2,6 +2,10 @@ import AVFoundation
 import Foundation
 
 class RecorderFileDelegate: NSObject, AudioRecordingFileDelegate, AVAudioRecorderDelegate {
+    func getSampleRate() -> Float {
+        return Float(audioRecorder!.format.sampleRate)
+    }
+    
   private var audioRecorder: AVAudioRecorder?
   private var path: String?
 
