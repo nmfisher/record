@@ -101,11 +101,7 @@ internal class RecorderWrapper(
     }
 
     fun getSampleRate(result: MethodChannel.Result) {
-        if (recorder != null) {
-            result.success(recorder!!.getSampleRate())
-        } else {
-            result.success(null)
-        }
+        result.success(recorder?.getSampleRate())
     }
 
     fun resume(result: MethodChannel.Result) {

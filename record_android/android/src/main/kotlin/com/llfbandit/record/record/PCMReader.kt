@@ -75,8 +75,8 @@ class PCMReader(
         return amplitude
     }
 
-    fun getSampleRate() : Double {
-        return reader.sampleRate.toDouble()
+    fun getSampleRate() : Double? {
+        return reader.sampleRate?.toDouble()
     }
 
     fun release() {

@@ -52,7 +52,7 @@ interface IRecorder {
      *
      * @return sample rate
      */
-    fun getSampleRate(): Double
+    fun getSampleRate(): Double?
 
     fun dispose()
 }
