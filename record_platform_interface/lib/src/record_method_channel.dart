@@ -115,6 +115,7 @@ class RecordMethodChannel extends RecordPlatform {
     );
   }
 
+  @override
   Future<double?> getSampleRate(String recorderId) async {
     final result = await _methodChannel.invokeMethod(
       'getSampleRate',
