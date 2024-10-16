@@ -75,6 +75,7 @@ class RecordMethodChannel extends RecordPlatform {
     String recorderId,
     RecordConfig config,
   ) async {
+    print("START STREAM WITH CONFIG ${config.toMap()}");
     final eventRecordChannel = EventChannel(
       'com.llfbandit.record/eventsRecord/$recorderId',
     );

@@ -88,6 +88,7 @@ public class SwiftRecordPlugin: NSObject, FlutterPlugin {
         result(FlutterError(code: "record", message: error.localizedDescription, details: nil))
       }
     case "startStream":
+        print("start stream with \(args)")
       guard let config = getConfig(args, result: result) else {
         return
       }
@@ -189,7 +190,9 @@ public class SwiftRecordPlugin: NSObject, FlutterPlugin {
 
     var iosConfig: IosConfig? = nil
     if let iosConfigMap = args["iosConfig"] as? [String : Any] {
+      #if os(iOS)
       iosConfig = IosConfig(map: iosConfigMap)
+      #endif
     }
 
     let config = RecordConfig(

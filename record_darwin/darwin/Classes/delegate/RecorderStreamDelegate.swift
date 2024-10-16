@@ -9,7 +9,9 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
 
   func start(config: RecordConfig, recordEventHandler: RecordStreamHandler) throws {
     let audioEngine = AVAudioEngine()
-    
+      
+
+      
 #if os(iOS)
     try initAVAudioSession(config: config)
     try initVoiceProcessing(config: config, audioEngine: audioEngine)
@@ -27,7 +29,8 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
       }
     }
 #endif
-    
+      
+
     let srcFormat = audioEngine.inputNode.inputFormat(forBus: 0)
     sampleRate = Float(srcFormat.sampleRate)
     
@@ -44,6 +47,8 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
         details: "Format is not supported: \(config.sampleRate)Hz - \(config.numChannels) channels."
       )
     }
+
+    print("dstFormat \(dstFormat)")
     
     guard let converter = AVAudioConverter(from: srcFormat, to: dstFormat) else {
       throw RecorderError.error(
@@ -53,7 +58,9 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
     }
     converter.sampleRateConverterQuality = AVAudioQuality.high.rawValue
     
-    audioEngine.inputNode.installTap(onBus: bus, bufferSize: 2048, format: srcFormat) { (buffer, _) -> Void in
+   
+    audioEngine.inputNode.installTap(onBus: bus, bufferSize: 8096, format: srcFormat) { (buffer, _) -> Void in
+        
       self.stream(
         buffer: buffer,
         dstFormat: dstFormat,
@@ -61,9 +68,20 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
         recordEventHandler: recordEventHandler
       )
     }
-    
+
+      // Set up echo cancellation
+//     try audioEngine.inputNode.setVoiceProcessingEnabled(true)
+
+
     audioEngine.prepare()
     try audioEngine.start()
+
+
+    if(!audioEngine.isRunning) {
+      print("NOT RUNNING")
+    } else {
+      print("RUNNING")
+    }
     
     self.audioEngine = audioEngine
   }
@@ -176,6 +194,7 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
   
   // Set up AGC & echo cancel
   private func initVoiceProcessing(config: RecordConfig, audioEngine: AVAudioEngine) throws {
+    print("INIT VOICE PROCESING")
     if #available(iOS 13.0, *) {
       do {
         try audioEngine.inputNode.setVoiceProcessingEnabled(config.echoCancel)
@@ -186,6 +205,8 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
           details: "Echo cancel error: \(error)"
         )
       }
+    } else { 
+      print("NOT AVAILABLE")
     }
   }
 }

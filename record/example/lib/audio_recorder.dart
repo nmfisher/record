@@ -53,13 +53,15 @@ class _RecorderState extends State<Recorder> with AudioRecorderMixin {
         final devs = await _audioRecorder.listInputDevices();
         debugPrint(devs.toString());
 
-        const config = RecordConfig(
-            sampleRate: 16000,
-            encoder: encoder,
+        var config = RecordConfig(
+            sampleRate: 48000,
+            encoder: encoder, 
             numChannels: 1,
+            device: devs.firstWhere((x) => x.id.contains("Scarl")),
             autoGain: true,
             noiseSuppress: true,
-            echoCancel: true);
+            echoCancel: true,
+            );
 
         // Record to file
         // await recordFile(_audioRecorder, config);

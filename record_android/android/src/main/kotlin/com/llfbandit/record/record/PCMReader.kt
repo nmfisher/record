@@ -94,7 +94,7 @@ class PCMReader(
 
         val reader = try {
             AudioRecord(
-                MediaRecorder.AudioSource.VOICE_COMMUNICATION,
+                MediaRecorder.AudioSource.VOICE_RECOGNITION,
                 sampleRate,
                 channels,
                 audioFormat,
@@ -103,6 +103,7 @@ class PCMReader(
         } catch (e: IllegalArgumentException) {
             throw Exception("Unable to instantiate PCM reader.", e)
         }
+        Log.w(TAG, "SET TO VOICE RECOGNITION MODE")
         if (reader.state != AudioRecord.STATE_INITIALIZED) {
             throw Exception("PCM reader failed to initialize.")
         }
@@ -150,6 +151,9 @@ class PCMReader(
         if (AutomaticGainControl.isAvailable()) {
             automaticGainControl = AutomaticGainControl.create(reader.audioSessionId)
             automaticGainControl?.enabled = config.autoGain
+            Log.w(TAG, "Automatic Gain Control activated")
+        } else { 
+            Log.w(TAG, "Automatic Gain Control not available")
         }
     }
 
@@ -157,6 +161,9 @@ class PCMReader(
         if (NoiseSuppressor.isAvailable()) {
             noiseSuppressor = NoiseSuppressor.create(reader.audioSessionId)
             noiseSuppressor?.enabled = config.noiseSuppress
+            Log.w(TAG, "Noise suppression activated")
+        } else { 
+            Log.w(TAG, "Noise suppression not available")
         }
     }
 
@@ -164,6 +171,9 @@ class PCMReader(
         if (AcousticEchoCanceler.isAvailable()) {
             acousticEchoCanceler = AcousticEchoCanceler.create(reader.audioSessionId)
             acousticEchoCanceler?.enabled = config.echoCancel
+            Log.w(TAG, "Echo supression activated")
+        } else { 
+            Log.w(TAG, "Echo supression not available")
         }
     }
 

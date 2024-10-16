@@ -21,10 +21,6 @@ mixin AudioRecorderMixin {
 
     stream.listen(
       (data) {
-        // ignore: avoid_print
-        print(
-          recorder.convertBytesToInt16(Uint8List.fromList(data)),
-        );
         file.writeAsBytesSync(data, mode: FileMode.append);
       },
       // ignore: avoid_print
